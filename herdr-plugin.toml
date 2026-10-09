@@ -1,0 +1,44 @@
+id = "m16khb.herdr-powertoys"
+name = "powertoys"
+version = "0.1.0"
+description = "Even out split panes: equalize a tab, snap the focused split to half, or cycle it through 1/2, 2/3 and 1/3."
+# Unix only: the actions talk to the Herdr socket as a Unix socket (Windows
+# uses a named pipe).
+platforms = ["macos", "linux"]
+# `layout.set_split_ratio` and `layout.export` on the socket API.
+min_herdr_version = "0.9.3"
+
+[[actions]]
+id = "equalize"
+title = "powertoys: equalize panes"
+description = "Give every pane in each row and column of the focused tab the same size."
+contexts = ["pane", "workspace"]
+command = ["perl", "bin/powertoys.pl", "equalize"]
+
+[[actions]]
+id = "half"
+title = "powertoys: split in half"
+description = "Set the split that holds the focused pane to exactly 1/2."
+contexts = ["pane", "workspace"]
+command = ["perl", "bin/powertoys.pl", "half"]
+
+[[actions]]
+id = "cycle"
+title = "powertoys: cycle 1/2, 2/3, 1/3"
+description = "Step the focused pane's share of its split through 1/2, 2/3 and 1/3."
+contexts = ["pane", "workspace"]
+command = ["perl", "bin/powertoys.pl", "cycle"]
+
+[[actions]]
+id = "setup-keys"
+title = "powertoys: install the default keybindings"
+description = "Bind prefix+= to equalize and prefix+plus to cycle, with split in half written beside them as a comment. One block in your Herdr config, backed up first."
+contexts = ["workspace"]
+command = ["bash", "herdr/keys.sh", "setup"]
+
+[[actions]]
+id = "remove-keys"
+title = "powertoys: remove the default keybindings"
+description = "Delete the block setup-keys wrote."
+contexts = ["workspace"]
+command = ["bash", "herdr/keys.sh", "remove"]
